@@ -85,9 +85,16 @@ output_handle_mode (void *data, struct wl_output *wl_output,
   }
 }
 
+static void
+output_handle_done (void *data, struct wl_output *wl_output)
+{
+  /* NOT IMPLEMENTED */
+}
+
 static const struct wl_output_listener output_listener = {
   output_handle_geometry,
   output_handle_mode,
+  output_handle_done,
 };
 
 /* DRM listeners for wl_drm interface */
