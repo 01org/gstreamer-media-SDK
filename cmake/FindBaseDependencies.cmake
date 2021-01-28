@@ -23,6 +23,7 @@ endfunction(FindGlib)
 
 function(FindGstreamer libs)
   pkg_check_modules (GSTREAMER            REQUIRED gstreamer-1.0>=1.6)
+  pkg_search_module (GST_PLUGINS_BAD      gstreamer-plugins-bad-1.0)
   pkg_check_modules (GSTREAMER_VIDEO      REQUIRED gstreamer-video-1.0>=1.6)
   pkg_check_modules (GSTREAMER_ALLOCATORS REQUIRED gstreamer-allocators-1.0>=1.6)
   pkg_check_modules (GSTREAMER_GL	  gstreamer-gl-1.0)
@@ -47,6 +48,11 @@ function(FindGstreamer libs)
     include_directories (${GSTREAMER_GL_INCLUDE_DIRS})
     add_definitions(-DHAVE_GST_GL_LIBS)
   endif()
+
+  if (${GST_PLUGINS_BAD_VERSION} VERSION_GREATER_EQUAL "1.18")
+    add_compile_options(-DUSE_GST_PLUGINS_BAD_1_18)
+  endif()
+
   set(${libs} ${GST_LIBS} PARENT_SCOPE)
 endfunction(FindGstreamer)
 

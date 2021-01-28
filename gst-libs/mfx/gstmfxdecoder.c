@@ -552,7 +552,11 @@ gst_mfx_decoder_handle_avc_codec_data (GstMfxDecoder * decoder,
                   nalu.data = decoder->codec_data->data;
                   nalu.size = decoder->codec_data->len;
 
+#ifdef USE_GST_PLUGINS_BAD_1_18
+                  if (GST_H264_PARSER_OK == gst_h264_parse_sps(&nalu, &sps) &&
+#else
                   if (GST_H264_PARSER_OK == gst_h264_parse_sps(&nalu, &sps, TRUE) &&
+#endif
                     sps.vui_parameters_present_flag &&
                     sps.vui_parameters.max_dec_frame_buffering == 16)
                         decoder->sync_out_surf = TRUE;

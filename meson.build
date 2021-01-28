@@ -90,6 +90,10 @@ endif
 mfx_decoder = get_option('MFX_DECODER')
 if mfx_decoder
 	mfx_c_args += ['-DMFX_DECODER']
+
+	if dependency('gst-plugins-bad', version: '>1.18').found()
+		mfx_c_args += ['-DUSE_GST_PLUGINS_BAD_1_18']
+	endif
 endif
 
 mfx_sink = get_option('MFX_SINK')
